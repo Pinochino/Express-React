@@ -1,7 +1,7 @@
 {
     "watch": ["src", ".env"],
-    "ext": ".ts,.js",
+    "ext": ".ts,.js,.tsx",
     "ignore": [],
-    "exec": "jsx ./src/server.js"
+    "exec": "tsx server.ts"
   }
   

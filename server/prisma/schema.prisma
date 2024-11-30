@@ -12,3 +12,106 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ENUM
+enum OrderStatus {
+  PROCESSING
+  SHIPPED
+  CONFIRMED
+}
+
+enum RoleName {
+  ADMIN
+  User
+}
+
+// MODELS 
+model User {
+  id        String   @id @default(uuid())
+  username  String
+  email     String   @unique
+  password  String
+  avatar    String
+  avatarUrl String
+  isDeleted Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roles     Role[]
+  carts     Cart[]
+  orders    Orders[]
+
+  @@map("users")
+}
+
+model Role {
+  id     String   @id @default(uuid())
+  name   RoleName
+  userId String   @default(uuid())
+  user   User     @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id           String      @id @default(uuid())
+  total_amount BigInt
+  quantity     Int
+  userId       String      @default(uuid())
+  user         User        @relation(fields: [userId], references: [id])
+  cart_items   Cart_Item[]
+}
+
+model Cart_Item {
+  id          String  @id @default(uuid())
+  quantity    Int
+  total_price Decimal
+  unit_price  Decimal
+  cartId      String  @default(uuid())
+  productId   String  @default(uuid())
+  Cart        Cart    @relation(fields: [cartId], references: [id])
+  Product     Product @relation(fields: [productId], references: [id])
+}
+
+model Orders {
+  id           String      @id @default(uuid())
+  order_date   DateTime    @default(now())
+  order_status OrderStatus
+  total_amount Decimal
+  userId       String      @default(uuid())
+  User         User        @relation(fields: [userId], references: [id])
+  order_items  OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  price     Decimal
+  quantity  Int
+  orderId   String  @default(uuid()) 
+  productId String  @default(uuid())
+  orders    Orders  @relation(fields: [orderId], references: [id])
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  inventory   Int
+  price       Decimal
+  brand       String
+  description String
+  order_items OrderItem[]
+  cart_items  Cart_Item[]
+  images      Image[]
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String @unique
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  file_name String
+  file_type String
+  image     Bytes
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+}
