@@ -3,8 +3,11 @@ dotenv.config();
 import express from 'express';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';
-import router from 'router/router';
 import cors from 'cors';
+import swaggerDocs from 'utils/swagger';
+import log from 'utils/logger';
+import routers from 'router/router';
+
 
 const app = express();
 
@@ -14,9 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(multer().none());
 
-router(app);
+routers(app);
 
-const port = process.env.PORT;
+const port:number = parseInt(process.env.PORT || "3000", 10);
+swaggerDocs(app, port);
+
 app.listen(port, () => {
-    console.log(`App is running on port http://localhost:${port}`);
+    log.info(`App is running on port http://localhost:${port}`);
 })

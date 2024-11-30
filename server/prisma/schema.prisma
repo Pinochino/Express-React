@@ -31,9 +31,9 @@ model User {
   username  String
   email     String   @unique
   password  String
-  avatar    String
-  avatarUrl String
-  isDeleted Boolean
+  avatar    String?
+  avatarUrl String?
+  isDeleted Boolean?  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   roles     Role[]
@@ -84,7 +84,7 @@ model OrderItem {
   id        String  @id @default(uuid())
   price     Decimal
   quantity  Int
-  orderId   String  @default(uuid()) 
+  orderId   String  @default(uuid())
   productId String  @default(uuid())
   orders    Orders  @relation(fields: [orderId], references: [id])
   Product   Product @relation(fields: [productId], references: [id])

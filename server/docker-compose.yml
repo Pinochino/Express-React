@@ -3,9 +3,9 @@ services:
     image: postgres
     container_name: postgres_db_container
     environment:
-      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-MERN}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password1}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-123456}
     ports:
       - '5432:5432'
     restart: unless-stopped
