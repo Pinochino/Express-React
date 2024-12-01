@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "ES6",
     "module": "commonjs",
     "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "strict": true,
     "esModuleInterop": true,

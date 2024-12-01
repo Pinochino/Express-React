@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10;
 
 
-async function encode(text: string): Promise<string> {
+export async function encode(text: string):Promise<String> {
     try {
         // Tạo salt và mã hóa mật khẩu với bcrypt
         const salt = await bcrypt.genSalt(saltRounds);
@@ -13,7 +13,7 @@ async function encode(text: string): Promise<string> {
     }
 }
 
-async function compare(text: string, encodedText: string): Promise<boolean> {
+export async function compare(text: string, encodedText: string): Promise<boolean> {
     try {
         const isEqual = await bcrypt.compare(text, encodedText);
         return isEqual;
@@ -22,4 +22,3 @@ async function compare(text: string, encodedText: string): Promise<boolean> {
     }
 }
 
-export default {compare, encode}
