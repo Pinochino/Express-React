@@ -4,7 +4,7 @@ import express from 'express';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import swaggerDocs from 'utils/swagger';
+// import swaggerDocs from 'utils/swagger';
 import log from 'utils/logger';
 import routers from 'router/router';
 
@@ -20,7 +20,7 @@ app.use(multer().none());
 routers(app);
 
 const port:number = parseInt(process.env.PORT || "3000", 10);
-swaggerDocs(app, port);
+// swaggerDocs(app, port);
 
 app.listen(port, () => {
     log.info(`App is running on port http://localhost:${port}`);
