@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import 'reflect-metadata';
 dotenv.config();
 import express from 'express';
 import multer from 'multer';
@@ -19,7 +20,7 @@ app.use(multer().none());
 
 routers(app);
 
-const port:number = parseInt(process.env.PORT || "8000", 10);
+const port = process.env.PORT;
 // swaggerDocs(app, port);
 
 app.listen(port, () => {

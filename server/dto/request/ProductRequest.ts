@@ -1,12 +1,12 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsOptional, IsString, IsUUID, Min, MinLength, ValidateNested } from "class-validator";
-import CartItemInterface from "interfaces/CartItemInterface";
 import ImageInterface from "interfaces/ImageInterface";
-import OrderItemInterface from "interfaces/OrderItemInterface";
 import ProductInterface from "interfaces/ProductInterface";
 import OrderItemRequest from "./OrderItemRequest";
 import CartItemRequest from "./CartItemRequest";
 import ImageRequest from "./ImageRequest";
+import 'reflect-metadata';
+
 
 class ProductRequest implements ProductInterface {
     @IsOptional()
@@ -15,24 +15,24 @@ class ProductRequest implements ProductInterface {
   
     @IsString()
     @MinLength(4, { message: "Name must be at least 4 characters long" })
-    name?: string;
+    name: string;
   
     @IsOptional()
     @IsNumber({}, { message: "Inventory must be a number" })
-    inventory?: number;
+    inventory: number;
   
     @IsOptional()
     @IsNumber({}, { message: "Price must be a valid number" })
-    price?: number;
+    price: number;
   
     @IsOptional()
     @IsString()
     @MinLength(2, { message: "Brand must be at least 2 characters long" })
-    brand?: string;
+    brand: string;
   
     @IsOptional()
     @IsString()
-    description?: string;
+    description: string;
   
     @IsOptional()
     @ValidateNested()

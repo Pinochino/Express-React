@@ -1,5 +1,7 @@
 import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsOptional, Min, MinLength } from "class-validator";
 import UserInterface from "interfaces/UserInterface";
+import 'reflect-metadata';
+
 
 class UserRequest implements UserInterface{
 

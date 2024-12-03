@@ -1,8 +1,8 @@
 {
-    "watch": ["src", ".env", "router"],
+    "watch": ["src"],
     "ext": ".ts,.js,.tsx",
     "ignore": [],
-    "exec": "tsx server.ts",
+    "exec": "tsx ts-node server.ts",
     "legacy-watch": true
   }
   

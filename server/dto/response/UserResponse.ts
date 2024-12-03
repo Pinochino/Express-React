@@ -1,5 +1,7 @@
 import { Expose } from "class-transformer";
 import UserInterface from "interfaces/UserInterface";
+import 'reflect-metadata';
+
 
 class UserResponse implements UserInterface {
     @Expose()
