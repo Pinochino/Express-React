@@ -2,20 +2,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function ListProduct() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [products, setProducts] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        axios.get()
-        .then(res => {
-            setProducts(res)
-            setLoading(false);
-        })
-        .catch(err => {
-            setLoading(false)
-            setError(err);
-        })
+        axios.get('')
+            .then(res => {
+                setProducts(res.data)
+                setLoading(false);
+            })
+            .catch(error => {
+                setLoading(false)
+                setError(error.message || error.response?.data?.message || 'An unknown error occurred');
+            })
     }, [])
 
     if (loading) {
@@ -25,7 +25,7 @@ function ListProduct() {
     }
     if (error) {
         return (
-            <h3>The website have {error}</h3>
+            <div>{error && (<h1>This website have {error}</h1>)}</div>
         )
     }
     // return (

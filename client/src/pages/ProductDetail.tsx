@@ -19,7 +19,7 @@ function ProductDetail() {
         setLoading(false);
       })
       .catch(err => {
-        setError(err)
+        setError(err.message || err.response?.data?.message || 'An unknown error occurred')
         setLoading(false)
       })
   }, [id])
@@ -29,12 +29,12 @@ function ProductDetail() {
   }
 
   if (error) {
-    return (<h1>This website have {error}</h1>)
+    return <div>{error && (<h1>This website have {error}</h1>)}</div>;
   }
 
   return (
     <div>
-      {product ? ( <section style={{ backgroundColor: "#eee" }}>
+      {product ? (<section style={{ backgroundColor: "#eee" }}>
         <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-md-8 col-lg-6 col-xl-4">

@@ -1,9 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+interface Product {
+  image?: string;
+  name?: string;
+  description?: string;
+  price?: string;
+}
+
 function UpdateProduct() {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<Product>({
     image: "",
     name: "",
     description: "",
@@ -15,29 +22,29 @@ function UpdateProduct() {
 
   const navigate = useNavigate();
 
-  const displaySelectedImage = (e) => {
+  const displaySelectedImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      document.getElementById("selectedAvatar").src = imageUrl;
+      document.getElementById("selectedAvatar").setAttribute('src', imageUrl);
     }
   };
 
-  
-  const handleUpdate = (event) => {
+
+  const handleUpdate = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     console.log(values);
     axios
       .put(`http://localhost:8000/product/update/${id}`, values)
       .then((res) => {
         console.log(res);
-        setValues(res);
+        setValues(res.data);
         setLoading(false);
         navigate("/");
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoading(false);
-        setError(err);
+        setError(error.message || error.response?.data?.message || 'An unknown error occurred');
       });
   };
 
@@ -46,7 +53,7 @@ function UpdateProduct() {
   }
 
   if (error) {
-    return <h3>This website have {error}</h3>;
+    return <div>{error && (<h1>This website have {error}</h1>)}</div>;;
   }
 
   return (
@@ -64,7 +71,7 @@ function UpdateProduct() {
             />
           </div>
           <div className="d-flex justify-content-center">
-            <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+            <div data-mdb-ripple-init className="btn btn-primary btn-rounded">
               <label
                 className="form-label text-white m-1"
                 htmlFor="customFile2"
@@ -98,7 +105,7 @@ function UpdateProduct() {
             <textarea
               placeholder="Enter description..."
               className="form-control"
-              rows="3"
+              rows={3}
               onChange={(e) =>
                 setValues({ ...values, description: e.target.value })
               }

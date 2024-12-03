@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "type": "commonjs",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,13 +11,13 @@
     "@types/react-dom": "^18.3.1",
     "axios": "^1.7.7",
     "classnames": "^2.5.1",
+    "customize-cra": "^1.0.0",
     "dayjs": "^1.11.13",
     "init": "^0.1.2",
     "pino": "^9.5.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -44,9 +45,12 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/customize-cra": "^1.0.8",
     "@types/node": "^22.10.1",
     "babel-plugin-module-resolver": "^5.0.2",
+    "react": "^18.3.1",
     "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
     "typescript": "^4.9.5"
   }

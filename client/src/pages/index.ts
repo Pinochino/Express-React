@@ -1,7 +1,9 @@
-export { default as HomePage } from './HomePage.js';
-export { default as CreateProduct } from './CreateProduct.js';
-export { default as ProductDetail } from './ProductDetail.js';
-export { default as Register } from './Register.js';
-export { default as UserDetail } from './UserDetail.js';
-export { default as Login } from './Login.js';
+export { default as HomePage } from './HomePage';
+export { default as CreateProduct } from './CreateProduct';
+export { default as ProductDetail } from './ProductDetail';
+export { default as Register } from './Register';
+export { default as UserDetail } from './UserDetail';
+export { default as Login } from './Login';
+
+
 

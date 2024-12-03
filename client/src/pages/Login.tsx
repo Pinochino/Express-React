@@ -1,12 +1,22 @@
 import { useState } from "react";
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+interface FormData {
+    email?: string;
+    password?: string;
+    checkRemember?: string;
+}
 
 function Login() {
-    const [inputs, setInputs] = useState({});
-    const [error, setError] = useState(null);
+    const [inputs, setInputs] = useState<FormData>({
+        email: '',
+        password: ''
 
-    const handleChange = (event) => {
+    });
+    const [error, setError] = useState<string | null>(null);
+
+    const handleChange = (event: { target: { name: any; value: any; }; }) => {
         const name = event.target.name;
         const value = event.target.value;
         setInputs((values) => ({ ...values, [name]: value }));
@@ -14,23 +24,23 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         console.log(inputs);
-        const API = `http://localhost:8000/customer/login`;
+        const API = `http://localhost:8000/users/login`;
         axios.post(API, inputs)
-        .then(data => {
-            console.log(data);
-            navigate('/')
-        })
-        .catch(error => {
-            console.error(error);
-            setError(error.message)
-        })
+            .then(data => {
+                console.log(data);
+                navigate('/')
+            })
+            .catch(error => {
+                console.error(error);
+                setError(error.message || error.response?.data?.message || 'An unknown error occurred')
+            })
     };
 
     if (error) {
-        return <h1>{error.message}</h1>
+        return <div>{error && (<h1>This website have {error}</h1>)}</div>
     }
 
     return (
@@ -42,7 +52,7 @@ function Login() {
             >
                 <h3 className="text-center m-4">Login Form</h3>
                 <div
-                    data-mdb-input-init
+                    data-mdb-input-init=""
                     className="htmlForm-outline mb-4 d-flex justify-content-center align-content-center"
                 >
                     <label className="me-2" htmlFor="email">
@@ -59,7 +69,7 @@ function Login() {
                 </div>
 
                 <div
-                    data-mdb-input-init
+                    data-mdb-input-init={""}
                     className="htmlForm-outline mb-4 d-flex justify-content-center align-content-center"
                 >
                     <label className="me-2" htmlFor="email">
@@ -111,7 +121,7 @@ function Login() {
                     <p>or sign up with:</p>
                     <button
                         type="button"
-                        data-mdb-button-init
+
                         data-mdb-ripple-init
                         className="btn btn-link btn-floating mx-1"
                     >
@@ -120,7 +130,7 @@ function Login() {
 
                     <button
                         type="button"
-                        data-mdb-button-init
+
                         data-mdb-ripple-init
                         className="btn btn-link btn-floating mx-1"
                     >
@@ -129,7 +139,7 @@ function Login() {
 
                     <button
                         type="button"
-                        data-mdb-button-init
+
                         data-mdb-ripple-init
                         className="btn btn-link btn-floating mx-1"
                     >
@@ -138,7 +148,7 @@ function Login() {
 
                     <button
                         type="button"
-                        data-mdb-button-init
+
                         data-mdb-ripple-init
                         className="btn btn-link btn-floating mx-1"
                     >

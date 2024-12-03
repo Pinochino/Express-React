@@ -1,46 +1,55 @@
 import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface FormData {
+  username?: string;
+  email?: string;
+  password?: string;
+}
 
 function Register() {
-  const [inputs, setInputs] = useState({});
-  const [error, setError] = useState(null);
+  const [inputs, setInputs] = useState<FormData>({
+    username: '',
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const displaySelectedImage = (e) => {
+  const displaySelectedImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      document.getElementById("selectedAvatar").src = imageUrl;
+      document.getElementById("selectedAvatar").setAttribute('src', imageUrl);
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     console.log(inputs);
     axios
-      .post("http://localhost:8000/customer/create", inputs)
+      .post("http://localhost:8000/users/register", inputs)
       .then((res) => {
         console.log(res);
         navigate("/login");
       })
       .catch((err) => {
         console.error(err);
-        setError(err.message)
+        setError(err.message || err.response?.data?.message || 'An unknown error occurred')
       });
   };
 
 
   if (error) {
-    return <h1>This website have {error.message}</h1>;
+    return <div>{error && (<h1>This website have {error}</h1>)}</div>;;
   }
 
   return (
@@ -66,7 +75,7 @@ function Register() {
                 Choose file
               </label>
               <input
-                 name="avatar"
+                name="avatar"
                 type="file"
                 className="form-control d-none"
                 id="customFile2"

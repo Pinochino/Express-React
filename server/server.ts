@@ -19,7 +19,7 @@ app.use(multer().none());
 
 routers(app);
 
-const port:number = parseInt(process.env.PORT || "3000", 10);
+const port:number = parseInt(process.env.PORT || "8000", 10);
 // swaggerDocs(app, port);
 
 app.listen(port, () => {

@@ -33,7 +33,7 @@ model User {
   password  String
   avatar    String?
   avatarUrl String?
-  isDeleted Boolean?  @default(false)
+  isDeleted Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   roles     Role[]
@@ -100,11 +100,13 @@ model Product {
   order_items OrderItem[]
   cart_items  Cart_Item[]
   images      Image[]
+  categories  Category[]
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
 }
 
 model Image {

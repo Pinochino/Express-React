@@ -10,25 +10,16 @@ const prisma = new PrismaClient();
 // const redis = new Redis();
 class UserController {
 
-  private sendSuccess(res: Response, message: string, data: any): void{
-    res.status(200).json({message,  data});
-  }
-
-  private sendError(res: Response, error: any): void{
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ message: errorMessage });
-  }
 
   // [GET] /users/list
   async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
       const data = await prisma.user.findMany();
       if (data) {
-        this.sendSuccess(res, 'success', data);
+        res.status(200).json({message: 'success', data});
       }
-      throw new ResourceNotFoundException();
     } catch (error) {
-      this.sendError(res, error)
+      res.status(500).json({message: error})
     }
   }
 
@@ -42,11 +33,11 @@ class UserController {
       if (data) {
         res.cookie('username', data.username, { httpOnly: true });
         res.cookie('email', data.email, { httpOnly: true });
-        this.sendSuccess(res, 'success', data)
+        res.status(200).json({message: 'success', data})
       }
-      throw new ResourceNotFoundException();
+  
     } catch (error) {
-      this.sendError(res, error);
+      res.status(500).json({message: error});
     }
   }
 
@@ -63,10 +54,10 @@ class UserController {
           avatar: userRequest.avatar
         }
       });
-     this.sendSuccess(res, 'success', newUser);
+      res.status(200).json({message: 'created successfully', newUser})
       return;
     } catch (error) {
-      this.sendError(res, error)
+      res.status(500).json({message: error})
     }
   }
 
@@ -97,10 +88,10 @@ class UserController {
           updatedAt: userRequest.updatedAt
         }
       });
-      this.sendSuccess(res, 'success', newUser);
+       res.status(200).json({message: 'update success', newUser})
       return;
     } catch (error) {
-     this.sendError(res, error)
+     res.status(500).json({message: error})
     }
   }
 
@@ -111,10 +102,10 @@ class UserController {
       const data = await prisma.user.delete({
         where: { id }
       });
-      this.sendSuccess(res, `delete success user by id: ${id}`, data)
+   res.status(200).json({message: `delete success user id: ${id}`, data})
       return;
     } catch (error) {
-      this.sendError(res, error)
+      res.status(500).json({message: error})
     }
   }
 
@@ -127,13 +118,13 @@ class UserController {
       });
 
       if (await compare(password, String(data?.password))) {
-      this.sendSuccess(res, 'login success', null);
+      res.status(200).json({message: 'login success'})
         return;
       }
-      this.sendSuccess(res, 'login fail', null);
+      res.status(400).json({message: 'login fail'})
       return;
     } catch (error) {
-      this.sendError(res, error)
+    res.status(500).json({message: error})
     }
   }
 
