@@ -92,7 +92,7 @@ class ProductController {
     }
   }
 
-  // [PUT] /products/update/:id
+  // [DELETE] /products/delete/:id
   async deleteProductById(req: Request, res: Response): Promise<void> {
     try {
         const productId = req.params.id;
@@ -111,6 +111,29 @@ class ProductController {
         res.status(500).json(error);
     }
   }
+
+
+  // [GET] /products/brand/:brand
+  async getProductByBrand(req: Request, res: Response){
+    try {
+      const brand = String(req.params.brand);
+      const products = await prisma.product.findMany({
+        where: {
+          brand: brand
+        }
+      })
+
+      if(products) {
+        res.status(200).json({message: `success with brand: ${brand}`, products});
+        return;
+      }
+      res.status(400).json({message: `Fail `});
+      return;
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+
 
   async convertToResponse(productRequest: ProductRequest) {}
 }

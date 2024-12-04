@@ -1,6 +1,9 @@
+import axios from "@/utils/axios.customize";
 import { useState } from "react";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface FormData {
     email?: string;
@@ -12,7 +15,6 @@ function Login() {
     const [inputs, setInputs] = useState<FormData>({
         email: '',
         password: ''
-
     });
     const [error, setError] = useState<string | null>(null);
 
@@ -26,8 +28,13 @@ function Login() {
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        console.log(inputs);
-        const API = `http://localhost:8000/users/login`;
+
+        if (!inputs) {
+            toast.error("Please enter the email and password");
+            return;
+        }
+
+        const API = `${process.env.BACKEND_URL}/users/login`;
         axios.post(API, inputs)
             .then(data => {
                 console.log(data);

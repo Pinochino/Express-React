@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { publicRoute } from "./routes/route";
 import { DefaultLayout } from "./layouts";
 import React, { Fragment } from "react";
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 function App() {
   return (

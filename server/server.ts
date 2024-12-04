@@ -24,5 +24,5 @@ const port = process.env.PORT;
 // swaggerDocs(app, port);
 
 app.listen(port, () => {
-    log.info(`App is running on port http://localhost:${port}`);
+   console.log(`App is running on port http://localhost:${port}`);
 })
