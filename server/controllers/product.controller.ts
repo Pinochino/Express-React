@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import ProductRequest from 'dto/request/ProductRequest';
 import { Request, Response } from 'express';
+import { convertToResponse, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from 'service/product.service';
 
 const prisma = new PrismaClient();
 class ProductController {
@@ -8,9 +8,11 @@ class ProductController {
   // [GET] /products/list
   async getAllProducts(req: Request, res: Response): Promise<void> {
     try {
-      const products = await prisma.product.findMany();
-      if (products) {
-        res.status(200).json({ message: 'success', products });
+      const products = await getAllProduct();
+      const productResponse = await convertToResponse(products);
+
+      if (productResponse) {
+        res.status(200).json({ message: 'success', productResponse });
         return;
       }
       res.status(400).json({ message: 'Not found data' });
@@ -23,14 +25,10 @@ class ProductController {
   // [GET] /products/product/:id
   async getProductyId(req: Request, res: Response): Promise<void> {
     try {
-      const productId = String(req.params.id);
-      const product = await prisma.product.findUnique({
-        where: {
-          id: productId
-        }
-      });
-      if (product) {
-        res.status(200).json({ message: 'success', product });
+      const product = await getProductById(req);
+      const productResponse = await convertToResponse(product);
+      if (productResponse) {
+        res.status(200).json({ message: 'success', productResponse });
         return;
       }
       res.status(400).json({ message: 'Not found data' });
@@ -43,18 +41,10 @@ class ProductController {
   // [POST] /products/create
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const productRequest = new ProductRequest(req.body)
-      const product = await prisma.product.create({
-        data: {
-            name: productRequest.name,
-            inventory: productRequest.inventory,
-            price: productRequest.price,
-            brand: productRequest.brand,
-            description: productRequest.description
-        }
-      })
-      if (product) {
-        res.status(200).json({ message: 'success', product });
+     const product = await createProduct(req);
+     const productResponse = await convertToResponse(product);
+      if (productResponse) {
+        res.status(200).json({ message: 'success', productResponse });
         return;
       }
       res.status(400).json({ message: 'Fail to create' });
@@ -67,25 +57,13 @@ class ProductController {
   // [PUT] /products/update/:id
   async update(req: Request, res: Response): Promise<void> {
     try {
-        const productId = req.params.id;
-        const productRequest = new ProductRequest(req.body);
-        const updatedProduct = await prisma.product.update({
-            where: {
-                id: productId
-            },
-            data: {
-                name: productRequest.name,
-                inventory: productRequest.inventory,
-                price: productRequest.price,
-                brand: productRequest.brand,
-                description: productRequest.description
-            }
-        })
-        if (updatedProduct) {
-            res.status(200).json({message: `Update success id: ${productId}`, updatedProduct});
+       const updatedProduct = await updateProduct(req);
+       const productResponse = await convertToResponse(updatedProduct);
+        if (productResponse) {
+            res.status(200).json({message: `update success`, productResponse});
             return;
         }
-        res.status(400).json({message: `Fail to update`})
+        res.status(400).json({message: `fail to update`})
         return;
     } catch (error) {
         res.status(500).json(error);
@@ -95,17 +73,12 @@ class ProductController {
   // [DELETE] /products/delete/:id
   async deleteProductById(req: Request, res: Response): Promise<void> {
     try {
-        const productId = req.params.id;
-        const isDeleted = await prisma.product.delete({
-            where: {
-                id: productId
-            }
-        })
+       const isDeleted = await deleteProductById(req);
         if (isDeleted) {
-            res.status(200).json({message: `Delete success product id" ${productId}`})
+            res.status(200).json({message: `Delete success product id`})
             return;
         }
-        res.status(400).json({message: `Fail delete id" ${productId}`})
+        res.status(400).json({message: `Fail delete id`})
         return;
     } catch (error) {
         res.status(500).json(error);
@@ -116,25 +89,17 @@ class ProductController {
   // [GET] /products/brand/:brand
   async getProductByBrand(req: Request, res: Response){
     try {
-      const brand = String(req.params.brand);
-      const products = await prisma.product.findMany({
-        where: {
-          brand: brand
-        }
-      })
-
+      const products = await getProductByBrand(req);
       if(products) {
-        res.status(200).json({message: `success with brand: ${brand}`, products});
+        res.status(200).json({message: `success`, products});
         return;
       }
-      res.status(400).json({message: `Fail `});
+      res.status(400).json({message: `fail`});
       return;
     } catch (error) {
       res.status(500).json(error);
     }
   }
 
-
-  async convertToResponse(productRequest: ProductRequest) {}
 }
 export default ProductController;
