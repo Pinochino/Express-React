@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 import { convertToResponse, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from 'service/product.service';
 
-const prisma = new PrismaClient();
 class ProductController {
 
   // [GET] /products/list
