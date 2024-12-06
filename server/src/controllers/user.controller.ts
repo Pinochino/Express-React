@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { PrismaClient, User } from '@prisma/client';
-import { compareEncoded, encodedPassword } from 'utils/crypto';
-import UserRequest from 'dto/request/UserRequest';
+import { compareEncoded, encodedPassword } from '@/utils/crypto';
 import Redis from 'ioredis';
-import { createUser, deleteUserById, getUserById, getUsers, login, updateUser } from 'service/user.service';
+import { createUser, deleteUserById, getUserById, getUsers, login, updateUser } from '@/service/user.service';
 import { console } from 'inspector';
+import UserRequest from '@/dto/request/UserRequest';
 
 const prisma = new PrismaClient();
 // const redis = new Redis();
@@ -44,7 +44,7 @@ class UserController {
     try {
       const userRequest = new UserRequest(req.body);
       const newUser = createUser(userRequest);
-      res.status(200).json({ message: 'created successfully', newUser })
+      res.status(200).json({ message: 'created successfully', data: newUser })
       return;
     } catch (error) {
       res.status(500).json({ message: error })
@@ -82,10 +82,13 @@ class UserController {
   async login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
     try {
-      const data = await login(email, password);
+      const result = await login(email, password);
 
-      if (data.success) {
-        res.status(200).json({ message: 'Login success' });
+      if (result.success) {
+        res.status(200).json({ message: 'Login success', user: {
+          username:  result.data.username,
+          email: result.data.email
+        } });
       } else {
         res.status(400).json({ message: 'Login failed' });
       }

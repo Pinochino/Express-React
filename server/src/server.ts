@@ -6,8 +6,8 @@ import multer from 'multer';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 // import swaggerDocs from 'utils/swagger';
-import log from 'utils/logger';
-import routers from 'router/router';
+import log from '@/utils/logger';
+import routers from '@/router/router';
 
 
 const app = express();

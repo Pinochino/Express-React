@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { PrismaClient } from '@prisma/client';
 import { classToClassFromExist } from 'class-transformer';
-import UserRequest from 'dto/request/UserRequest';
-import UserResponse from 'dto/response/UserResponse';
-import { Request } from 'express';
-import { compareEncoded, encodedPassword } from 'utils/crypto';
+
+import { compareEncoded, encodedPassword } from '@/utils/crypto';
+import jwt from 'jsonwebtoken';
+import UserRequest from '@/dto/request/UserRequest';
+import UserResponse from '@/dto/response/UserResponse';
 
 const prisma = new PrismaClient();
 export const createUser = async (userRequest: UserRequest) => {
@@ -89,8 +92,20 @@ export const login = async (email: string, password: string) => {
         const passwordMatch = await compareEncoded(password, user.password);
         if (!passwordMatch) {
             throw new Error('Invalid password');
-        }
-        return { success: true };
+        } 
+            // create an access token
+            const payload = {
+                username: user.username,
+                email: user.email,
+            }
+            const secret = process.env.JWT_SECRET || '7cbc616d-c9e9-4397-96b7-d1f9c236b991';
+            const access_token = jwt.sign(payload, 
+                secret, 
+                {
+                    expiresIn: process.env.JWT_EXPIRED
+                }
+            );
+        return { success: true, data: user };
     } catch (error) {
         throw new Error(`Can't delete user ${error}`);
     }

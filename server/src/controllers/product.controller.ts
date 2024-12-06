@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { convertToResponse, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from 'service/product.service';
+import { convertToResponse, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from '@/service/product.service';
 
 class ProductController {
 

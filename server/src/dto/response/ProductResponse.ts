@@ -1,7 +1,7 @@
 import CartItemRequest from 'dto/request/CartItemRequest';
 import OrderItemRequest from 'dto/request/OrderItemRequest';
-import ImageInterface from 'interfaces/ImageInterface';
-import ProductInterface from 'interfaces/ProductInterface';
+import ImageInterface from '@/interfaces/ImageInterface';
+import ProductInterface from '@/interfaces/ProductInterface';
 import 'reflect-metadata';
 
 class ProductResponse {

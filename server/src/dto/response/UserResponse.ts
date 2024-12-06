@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import UserInterface from "interfaces/UserInterface";
+import UserInterface from "@/interfaces/UserInterface";
 import 'reflect-metadata';
 
 

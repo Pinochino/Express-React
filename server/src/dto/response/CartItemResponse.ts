@@ -1,6 +1,6 @@
-import CartInterface from "interfaces/CartInterface";
-import CartItemInterface from "interfaces/CartItemInterface";
-import ProductInterface from "interfaces/ProductInterface";
+import CartInterface from "@/interfaces/CartInterface";
+import CartItemInterface from "@/interfaces/CartItemInterface";
+import ProductInterface from "@/interfaces/ProductInterface";
 import 'reflect-metadata';
 
 

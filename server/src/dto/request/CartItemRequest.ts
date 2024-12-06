@@ -1,8 +1,8 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsOptional, IsUUID, ValidateNested } from "class-validator";
-import CartItemInterface from "interfaces/CartItemInterface";
+import CartItemInterface from "@/interfaces/CartItemInterface";
 import CartRequest from "./CartRequest";
-import CartInterface from "interfaces/CartInterface";
+import CartInterface from "@/interfaces/CartInterface";
 import ProductRequest from "./ProductRequest";
 import 'reflect-metadata';
 

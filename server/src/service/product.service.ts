@@ -1,7 +1,8 @@
+import ProductRequest from "@/dto/request/ProductRequest";
+import ProductResponse from "@/dto/response/ProductResponse";
 import { PrismaClient } from "@prisma/client";
 import { classToClassFromExist } from "class-transformer";
-import ProductRequest from "dto/request/ProductRequest";
-import ProductResponse from "dto/response/ProductResponse";
+
 import { Request  } from "express"
 
 const prisma = new PrismaClient();

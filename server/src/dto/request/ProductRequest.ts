@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsOptional, IsString, IsUUID, Min, MinLength, ValidateNested } from "class-validator";
-import ImageInterface from "interfaces/ImageInterface";
-import ProductInterface from "interfaces/ProductInterface";
+import ImageInterface from "@/interfaces/ImageInterface";
+import ProductInterface from "@/interfaces/ProductInterface";
 import OrderItemRequest from "./OrderItemRequest";
 import CartItemRequest from "./CartItemRequest";
 import ImageRequest from "./ImageRequest";
