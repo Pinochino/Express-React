@@ -1,9 +1,6 @@
 -- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('PROCESSING', 'SHIPPED', 'CONFIRMED');
 
--- CreateEnum
-CREATE TYPE "RoleName" AS ENUM ('ADMIN', 'User');
-
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
@@ -22,7 +19,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "Role" (
     "id" TEXT NOT NULL,
-    "name" "RoleName" NOT NULL,
+    "name" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Role_pkey" PRIMARY KEY ("id")

@@ -11,9 +11,12 @@
     "@types/react-dom": "^18.3.1",
     "axios": "^1.7.7",
     "classnames": "^2.5.1",
+    "crypto-browserify": "^3.12.1",
     "customize-cra": "^1.0.0",
     "dayjs": "^1.11.13",
     "init": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
     "pino": "^9.5.0",
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.6",
@@ -45,7 +48,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/node": "^7.26.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.26.0",
     "@types/customize-cra": "^1.0.8",
     "@types/node": "^22.10.1",
     "babel-plugin-module-resolver": "^5.0.2",

@@ -1,6 +1,8 @@
 import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsOptional, Min, MinLength } from "class-validator";
 import UserInterface from "@/interfaces/UserInterface";
 import 'reflect-metadata';
+import RoleInterface from "@/interfaces/RoleInterface";
+import RoleResponse from "../response/RoleResponse";
 
 
 class UserRequest implements UserInterface{
@@ -30,6 +32,9 @@ class UserRequest implements UserInterface{
 
     @IsDate()
     updatedAt?: Date = new Date();
+
+    roles: RoleResponse[];
+
     constructor(
       data: UserInterface
     ) {
@@ -40,7 +45,8 @@ class UserRequest implements UserInterface{
         this.avatarUrl= data.avatarUrl,
         this.isDeleted= data.isDeleted ?? this.isDeleted,
         this.createdAt= data.createdAt ?? this.createdAt,
-        this.updatedAt= data.updatedAt ?? this.updatedAt
+        this.updatedAt= data.updatedAt ?? this.updatedAt,
+        this.roles = data.roles
     }
 }
 export default UserRequest;

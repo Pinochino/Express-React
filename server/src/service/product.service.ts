@@ -10,8 +10,9 @@ const prisma = new PrismaClient();
 export const getAllProduct = async () => {
     try {
         const products = await prisma.product.findMany();
-        if (products) {
-            return products;
+        const result = await convertToProductRes(products);
+        if (result) {
+            return result;
         }
     } catch (error) {
         throw new ResourceNotFoundException(`Error fetching producs with error: ${error}`)
@@ -100,7 +101,15 @@ export const getProductByBrand = async (req: Request) => {
     }
 }
 
-export const convertToResponse = (product: any) => {
-    const productResponse = new ProductResponse(product);
-    return classToClassFromExist(productResponse, product);
-}
+export const convertToProductRes = (product: any) => {
+    if (Array.isArray(product)) {
+      return product.map((item) => {
+        const productResponse = new ProductResponse(item);
+        return classToClassFromExist(productResponse, item);
+      });
+    } else {
+      const productResponse = new ProductResponse(product);
+      return classToClassFromExist(productResponse, product);
+    }
+  };
+  

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { convertToResponse, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from '@/service/product.service';
+import { convertToProductRes, createProduct, deleteProductById, getAllProduct, getProductByBrand, getProductById, updateProduct } from '@/service/product.service';
 
 class ProductController {
 
@@ -7,10 +7,8 @@ class ProductController {
   async getAllProducts(req: Request, res: Response): Promise<void> {
     try {
       const products = await getAllProduct();
-      const productResponse = await convertToResponse(products);
-
-      if (productResponse) {
-        res.status(200).json({ message: 'success', productResponse });
+      if (products) {
+        res.status(200).json({ message: 'success', products });
         return;
       }
       res.status(400).json({ message: 'Not found data' });
@@ -24,7 +22,7 @@ class ProductController {
   async getProductyId(req: Request, res: Response): Promise<void> {
     try {
       const product = await getProductById(req);
-      const productResponse = await convertToResponse(product);
+      const productResponse = await convertToProductRes(product);
       if (productResponse) {
         res.status(200).json({ message: 'success', productResponse });
         return;
@@ -40,7 +38,7 @@ class ProductController {
   async create(req: Request, res: Response): Promise<void> {
     try {
      const product = await createProduct(req);
-     const productResponse = await convertToResponse(product);
+     const productResponse = await convertToProductRes(product);
       if (productResponse) {
         res.status(200).json({ message: 'success', productResponse });
         return;
@@ -56,7 +54,7 @@ class ProductController {
   async update(req: Request, res: Response): Promise<void> {
     try {
        const updatedProduct = await updateProduct(req);
-       const productResponse = await convertToResponse(updatedProduct);
+       const productResponse = await convertToProductRes(updatedProduct);
         if (productResponse) {
             res.status(200).json({message: `update success`, productResponse});
             return;

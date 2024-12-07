@@ -1,12 +1,8 @@
 import { Request, Response } from 'express';
-import { PrismaClient, User } from '@prisma/client';
-import { compareEncoded, encodedPassword } from '@/utils/crypto';
 import Redis from 'ioredis';
-import { createUser, deleteUserById, getUserById, getUsers, login, updateUser } from '@/service/user.service';
-import { console } from 'inspector';
+import {  createUser, deleteUserById, getUserById, getUsers, login } from '@/service/user.service';
 import UserRequest from '@/dto/request/UserRequest';
 
-const prisma = new PrismaClient();
 // const redis = new Redis();
 class UserController {
 
@@ -14,9 +10,9 @@ class UserController {
   // [GET] /users/list
   async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
-      const data = await getUsers();
-      if (data) {
-        res.status(200).json({ message: 'success', data });
+      const users = await getUsers();
+      if (users) {
+        res.status(200).json({ message: 'success',  users });
       }
     } catch (error) {
       res.status(500).json({ message: error })
@@ -43,26 +39,32 @@ class UserController {
   async create(req: Request, res: Response): Promise<void> {
     try {
       const userRequest = new UserRequest(req.body);
-      const newUser = createUser(userRequest);
-      res.status(200).json({ message: 'created successfully', data: newUser })
+      console.log(userRequest);
+      const newUser = await createUser(userRequest);
+      if (newUser) {
+        res.status(200).json({ message: 'created successfully', data: newUser })
+        return;
+      }
+      res.status(400).json({ message: 'fail'})
       return;
     } catch (error) {
-      res.status(500).json({ message: error })
+      console.log(error);
+      res.status(500).json(error)
     }
   }
 
   // [PUT] /users/update/:id
-  async update(req: Request, res: Response): Promise<void> {
-    try {
-      const userId = req.params.id;
-      const userRequest = new UserRequest(req.body);
-      const updatedUser = await updateUser(userId, userRequest);
-      res.status(200).json({ message: 'update success', updatedUser })
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error })
-    }
-  }
+  // async update(req: Request, res: Response): Promise<void> {
+  //   try {
+  //     const userId = req.params.id;
+  //     const userRequest = new UserRequest(req.body);
+  //     const updatedUser = await updateUser(userId, userRequest);
+  //     res.status(200).json({ message: 'update success', updatedUser })
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error })
+  //   }
+  // }
 
   // [DELETE] /users/delete/:id
   async deleteUserById(req: Request, res: Response): Promise<void> {
@@ -94,7 +96,7 @@ class UserController {
       }
       return;
     } catch (error) {
-      res.status(500).json({ message: error })
+      res.status(500).json(error)
     }
   }
 

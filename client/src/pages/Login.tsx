@@ -38,10 +38,12 @@ function Login() {
         axios.post(API, inputs)
             .then(data => {
                 console.log(data);
+                toast.success('Login success');
                 navigate('/')
             })
             .catch(error => {
                 console.error(error);
+                toast.error('login fail')
                 setError(error.message || error.response?.data?.message || 'An unknown error occurred')
             })
     };
