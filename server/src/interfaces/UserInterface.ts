@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import RoleInterface from "./RoleInterface";
 
 interface UserInterface {
@@ -10,6 +11,8 @@ interface UserInterface {
     isDeleted?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
-    roles: RoleInterface[];
+    roles: string[];
 }
 export default UserInterface;
+
+export const users: UserInterface[] = [];

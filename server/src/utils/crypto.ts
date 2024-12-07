@@ -8,7 +8,6 @@ export async function encodedPassword(text: string): Promise<string> {
         // Tạo salt và mã hóa mật khẩu với bcrypt
         const salt = await bcrypt.genSalt(saltRounds);
         const hash = await bcrypt.hash(text, salt);
-        console.log(hash);
         return hash; 
     } catch (err) {
         throw new Error(`Error: ${err}`);

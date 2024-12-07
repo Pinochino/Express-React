@@ -10,7 +10,7 @@ userRouter.get('/list',  userController.getAllUsers);
 userRouter.get('/user/:id',  userController.getUserById);
 userRouter.post('/register',  userController.create);
 userRouter.post('/login',  userController.login);
-// userRouter.put('/update/:id',  userController.update);
+userRouter.put('/update/:id',  userController.update);
 userRouter.delete('/delete/:id',  userController.deleteUserById);
 
 

@@ -7,3 +7,5 @@ interface RoleInterface {
     user?: UserInterface;
 }
 export default RoleInterface;
+
+export const roles: RoleInterface[] = [];

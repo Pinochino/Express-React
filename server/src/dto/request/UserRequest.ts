@@ -33,7 +33,7 @@ class UserRequest implements UserInterface{
     @IsDate()
     updatedAt?: Date = new Date();
 
-    roles: RoleResponse[];
+    roles: string[];
 
     constructor(
       data: UserInterface
